@@ -15,6 +15,7 @@
         <a href="https://www.github.com/leonel-acosta" target="_blank">
           Leonel Acosta
           <img
+            alt="profile"
             src="https://media.licdn.com/dms/image/v2/D4D03AQE8XDKfxn_wvA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1729173321364?e=1772064000&v=beta&t=5r3GOcN9z5Qil4cnqObNtvmUPXsI7S7yv60HHIc_nl4"
           />
         </a>
