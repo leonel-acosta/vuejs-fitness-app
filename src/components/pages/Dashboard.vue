@@ -1,5 +1,6 @@
 <script setup>
-import { gymHealthFacts } from "../../utils";
+import Grid from "../Grid.vue";
+import { gymHealthFacts, workoutProgram } from "../../utils";
 console.log(gymHealthFacts);
 // Generate a random integer
 const randomNumber = Math.floor(Math.random() / gymHealthFacts.length);
@@ -21,7 +22,33 @@ const todaysFact = gymHealthFacts[randomNumber];
         <button>Start workout &rarr;</button>
       </div>
     </div>
+    <Grid />
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.tip-container,
+.tip-container div,
+#dashboard {
+  display: flex;
+}
+
+.tip-container,
+#dashboard {
+  flex-direction: column;
+}
+
+#dashboard {
+  gap: 2rem;
+}
+
+.tip-container {
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .tip-container {
+    gap: 1rem;
+  }
+}
+</style>
