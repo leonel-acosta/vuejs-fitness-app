@@ -14,10 +14,12 @@ const { data, selectedWorkout } = defineProps({
 
 const { workout, warmup } = workoutProgram[selectedWorkout];
 let selectedExercise = ref(null);
+// Looks up the description text for the currently selected exercise
 const exerciseDescription = computed(
   () => exerciseDescriptions[selectedExercise.value],
 );
 
+// Closes the exercise description modal by clearing the selected exercise
 function handleCloseModal() {
   selectedExercise.value = null;
 }

@@ -8,7 +8,7 @@ const props = defineProps({
   handleResetPlan: Function,
 });
 
-// Generate a random integer
+// Pick a random health fact to display as the daily tip
 const randomNumber = Math.floor(Math.random() / gymHealthFacts.length);
 const todaysFact = gymHealthFacts[randomNumber];
 </script>

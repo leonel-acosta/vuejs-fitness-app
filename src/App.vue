@@ -20,6 +20,7 @@ const selectedDisplay = ref(1);
 const data = ref(defaultData);
 const selectedWorkout = ref(-1);
 
+// Returns true when all exercise weight inputs for the selected workout are filled in
 const isWorkoutComplete = computed(() => {
   const currWorkout = data.value?.[selectedWorkout.value];
   if (!currWorkout) {
@@ -31,6 +32,7 @@ const isWorkoutComplete = computed(() => {
   return isCompleteCheck;
 });
 
+// Returns the index of the first workout that still has empty fields, or -1 if all are complete
 const firstIncompleteWorkoutIndex = computed(() => {
   const allWorkouts = data.value;
   if (!allWorkouts) {
@@ -47,21 +49,25 @@ const firstIncompleteWorkoutIndex = computed(() => {
   return -1; // all are complete
 });
 
+// Switches the visible page (1=Welcome, 2=Dashboard, 3=Workout)
 function handleChangeDisplay(idx) {
   selectedDisplay.value = idx;
 }
 
+// Navigates to the Workout page and sets the selected workout by index
 function handleSelectedWorkout(idx) {
   selectedDisplay.value = 3;
   selectedWorkout.value = idx;
 }
 
+// Persists workout data to localStorage and redirects back to the Dashboard
 function handleSaveWorkout() {
   localStorage.setItem("workouts", JSON.stringify(data.value));
   selectedDisplay.value = 2;
   selectedWorkout.value = -1;
 }
 
+// Clears all workout progress, removes saved data from localStorage, and returns to Dashboard
 function handleResetPlan() {
   selectedDisplay.value = 2;
   selectedWorkout.value = -1;
@@ -70,6 +76,7 @@ function handleResetPlan() {
   console.log("reset");
 }
 
+// On mount, restores saved workout data from localStorage and skips the Welcome page
 onMounted(() => {
   console.log("Page Mounted");
   if (!localStorage) {
