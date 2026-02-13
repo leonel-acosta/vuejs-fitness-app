@@ -3,7 +3,7 @@ import Layout from "./components/layouts/Layout.vue";
 import Welcome from "./components/pages/Welcome.vue";
 import Dashboard from "./components/pages/Dashboard.vue";
 import Workout from "./components/pages/Workout.vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { workoutProgram } from "./utils";
 
 const defaultData = {};
@@ -70,9 +70,17 @@ function handleResetPlan() {
   console.log("reset");
 }
 
-selectedDisplay.value = 2;
-
-selectedWorkout.value = -1;
+onMounted(() => {
+  console.log("Page Mounted");
+  if (!localStorage) {
+    return;
+  }
+  if (localStorage.getItem("workouts")) {
+    const savedData = JSON.parse(localStorage.getItem("workouts"));
+    data.value = savedData;
+    selectedDisplay.value = 2; //avoid always landing in the welcome screen
+  }
+});
 </script>
 
 <template>
