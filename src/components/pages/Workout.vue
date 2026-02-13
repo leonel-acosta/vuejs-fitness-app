@@ -2,7 +2,16 @@
 import { ref, computed } from "vue";
 import { workoutProgram, exerciseDescriptions } from "../../utils";
 import Portal from "../Portal.vue";
-const selectedWorkout = 4;
+
+const workoutType = ["Push", "Pull", "Legs"];
+
+const { data, selectedWorkout } = defineProps({
+  data: Object,
+  selectedWorkout: Number,
+  handleSaveWorkout: Function,
+  isWorkoutComplete: Boolean,
+});
+
 const { workout, warmup } = workoutProgram[selectedWorkout];
 let selectedExercise = ref(null);
 const exerciseDescription = computed(
@@ -32,18 +41,22 @@ function handleCloseModal() {
       <div class="plan-card-header">
         <p>
           Day
-          {{ selectedWorkout < 9 ? "0" + selectedWorkout : selectedWorkout }}
+          {{
+            selectedWorkout < 9
+              ? "0" + (selectedWorkout + 1)
+              : selectedWorkout + 1
+          }}
         </p>
         <i class="fa-solid fa-dumbbell"></i>
+        <h2>{{ workoutType[selectedWorkout % 3] }} workout</h2>
       </div>
-      <h2>{{ "Push" }} Workout</h2>
     </div>
     <div class="workout-grid">
       <h4 class="grid-name">Warmup</h4>
       <h6>Sets</h6>
       <h6>Reps</h6>
       <h6 class="grid-weights">Weights</h6>
-      <div class="workout-grid-row" v-for="(w, wIdx) in workout" key="wIdx">
+      <div class="workout-grid-row" v-for="(w, wIdx) in warmup" key="wIdx">
         <div class="grid-name">
           <p>{{ w.name }}</p>
           <button
@@ -66,7 +79,7 @@ function handleCloseModal() {
       <h6>Sets</h6>
       <h6>Reps</h6>
       <h6 class="grid-weights">Weights</h6>
-      <div class="workout-grid-row" v-for="(w, wIdx) in warmup" key="wIdx">
+      <div class="workout-grid-row" v-for="(w, wIdx) in workout" key="wIdx">
         <div class="grid-name">
           <p>{{ w.name }}</p>
           <button
@@ -82,12 +95,21 @@ function handleCloseModal() {
         </div>
         <p>{{ w.sets }}</p>
         <p>{{ w.reps }}</p>
-        <input class="grid-weights" placeholder="14kg" type="text" disabled />
+        <input
+          v-model="data[selectedWorkout][w.name]"
+          class="grid-weights"
+          placeholder="14kg"
+          type="text"
+        />
       </div>
     </div>
     <div class="card workout-btns">
-      <button>Save & Exit <i class="fa-solid fa-save"></i></button>
-      <button>Complete <i class="fa-solid fa-check"></i></button>
+      <button @click="handleSaveWorkout">
+        Save & Exit <i class="fa-solid fa-save"></i>
+      </button>
+      <button :disabled="!isWorkoutComplete" @click="handleSaveWorkout">
+        Complete <i class="fa-solid fa-check"></i>
+      </button>
     </div>
   </section>
 </template>
