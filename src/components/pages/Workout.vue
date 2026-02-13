@@ -50,8 +50,8 @@ function handleCloseModal() {
           }}
         </p>
         <i class="fa-solid fa-dumbbell"></i>
-        <h2>{{ workoutType[selectedWorkout % 3] }} workout</h2>
       </div>
+      <h2>{{ workoutType[selectedWorkout % 3] }} workout</h2>
     </div>
     <div class="workout-grid">
       <h4 class="grid-name">Warmup</h4>
